@@ -1,1 +1,0 @@
-[{"nombreusuario": "Juan", "contraseña": "123", "tipo": "admin"},{"nombreusuario": "Carla", "contraseña": "123", "tipo": "user"},{"nombreusuario": "Marco","contraseña": "123", "tipo": "analista"}]
