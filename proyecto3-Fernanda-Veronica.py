@@ -2,7 +2,7 @@ from tkinter import *
 import os
 from tkinter import messagebox as MessageBox
 
-path = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
+path = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
 files = os.listdir(path)
 
 class Vestuario:
@@ -291,7 +291,7 @@ def validarId(v,c,cedula):
         for fichero in ficheros:
             if id  == fichero.name:
                 dressOutfit(v,cedula)
-            else:
+            elif fichero== "":
                 MessageBox.showerror("Error", "THIS ID IS NOT REGISTERED")
 
 def mostrarColor(skin):
@@ -441,13 +441,28 @@ def dressShoes(ventana,cedula,outfit,accesorios):
     for i in vestuarios.getCalzado():
         Radiobutton(ventana_shoes,bg="pink",text=i,variable=selected,value=c,font="Arial, 12").pack()
         c += 1
-    Button(ventana_shoes, text="Next", command=lambda:mostrarOutfit(ventana,cedula,outfit,accesorios,selected.get()), font="Arial, 11").pack(padx=10,pady=20)
+    Button(ventana_shoes, text="AVATAR INFORMATION", command=lambda:mostrarOutfit(ventana,cedula,outfit,accesorios,selected.get()), font="Arial, 11").pack(padx=10,pady=20)
+    Button(ventana_shoes, text="CHECK YOUR AVATAR",
+           command=lambda: mostrarAvatar(ventana,  outfit, accesorios, selected.get()), font="Arial, 11").pack(
+        padx=10, pady=20)
     ventana.destroy()
 
 def mostrarOutfits(outfit):
 
     ropa = Vestuario()
     return ropa.getRopas(outfit)
+def mostrarAvatar(ventana,outfit,accesorios,zapatos):
+    ventana_shoes = Toplevel()
+    ventana_shoes.config(bg="pink")
+    ventana_shoes.title("Create Avatar")
+    ventana_shoes.geometry("600x600")
+    Label(ventana_shoes, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20, pady=40)
+    Label(ventana_shoes, bg="pink", text="THIS IS YOUR AVATAR", font="Arial, 15").pack()
+
+    
+
+
+
 
 def mostrarAccesorios(accesorio):
 
@@ -530,10 +545,10 @@ def Consulta_1(carpeta,indice,comp):
             archi.close()
     return resultados
 
-a= Consulta_1('C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"++Rostro 3\n")
+a= Consulta_1('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"++Rostro 3\n")
 cont=0
 for i in a:
-    archivo= open('C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
+    archivo= open('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
     lineas= archivo.readlines()
     cont+=1
     print(lineas)
