@@ -1,15 +1,14 @@
 from tkinter import *
 import os
 from tkinter import messagebox as MessageBox
-path = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
-files = os.listdir(path)
 
+path = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
+files = os.listdir(path)
 
 class Vestuario:
     def __init__(self):
-        self.vestuario = {
-            "accesorios": ["Lentes", "Reloj", "Brazalete", "Cadena", "Aretes","Sombrero", "Ninguno"],
-            "ropa": ["Formal", "Casual", "Deportivo", "Baño", "Etiqueta"],
+        self.vestuario = {"accesorios": ["Lentes", "Reloj", "Brazalete", "Cadena", "Aretes","Sombrero", "Ninguno"],
+            "ropa": ["Formal", "Casual", "Deportivo", "Baño", "Bo"],
             "calzado": ["Botas", "Tenis", "Zapatilla", "Mocasines",  "Pantuflas",
                         "Tacones"]}  # Attributes assigned
 
@@ -69,16 +68,16 @@ class Cabello:
 
 class ColorCabello:
     def __init__(self):
-        self.setColorCabello = ["Negro", "Castaño", "Rubia", "Rojizo"]  # Attributes assigned
+        self.ColorCabello = ["Negro", "Castaño", "Rubia", "Rojizo"]  # Attributes assigned
 
     def setColorCabello(self, colorCabello):
-        self.colorCabello = colorCabello  # Assign value in the dictionary in the eye shape position
+        self.ColorCabello = colorCabello  # Assign value in the dictionary in the eye shape position
 
     def getColorCabello(self):  # Get that gets the eye shape in X position
-        return self.colorCabello
+        return self.ColorCabello
 
     def getColorCabelloIndice(self, indice):
-        return self.colorCabello[indice]
+        return self.ColorCabello[indice]
 
 class Genero:
     def __init__(self):
@@ -195,8 +194,7 @@ def createAvatar(ventana):
 
     ventana.withdraw()
 
-
-def registerSkin(ventana,cedula):
+def registerSkin(ventana,c,cedula):
     skin = Piel()
     c = 0
     selected = IntVar()
@@ -287,11 +285,11 @@ def registerGender(ventana,cedula,skin,hair,eyes):
 
     ventana.destroy()
 
-def validarId(v,cedula):
+def validarId(v,c,cedula):
     id = str(cedula)+'.txt'
     with os.scandir(path) as ficheros:
         for fichero in ficheros:
-            if id  == fichero:
+            if id  == fichero.name:
                 dressOutfit(v,cedula)
             else:
                 MessageBox.showerror("Error", "THIS ID IS NOT REGISTERED")
@@ -316,7 +314,6 @@ def mostrarGenero(gender):
     genero = Genero()
     return genero.getgeneros(gender)
 
-
 def guardarDatos(cedula,gender,skin,hair,eyes):
     nombreTxt = str(cedula)+".txt"
     archivo = open(nombreTxt,"w")
@@ -333,7 +330,6 @@ def mostrarInfor(ventana,cedula,skin,hair,eyes,gender):
     ventana_gender.config(bg = "pink")
     ventana_gender.title("Create Avatar")
     ventana_gender.geometry("600x650")
-
 
     skins = mostrarColor(skin)
     hairs = mostrarCabello(hair)
@@ -381,8 +377,7 @@ def dressingAvatar(ventana):
     cedula = Entry(ventana_create, font="Arial, 13")
     cedula.pack(padx=10, pady=10)
 
-
-    Button(ventana_create, command =lambda:validarId(ventana_create,cedula),text="Next",font="Arial, 11").pack(padx=10,pady=20)
+    Button(ventana_create, command =lambda:validarId(ventana_create,cedula,cedula.get()),text="Next",font="Arial, 11").pack(padx=10,pady=20)
     ventana.destroy()
 
 def dressOutfit(v,cedula):
@@ -464,6 +459,7 @@ def mostrarZapatos(shoe):
     ropa = Vestuario()
     return ropa.getCalzados(shoe)
 
+
 def mostrarOutfit(ventana,cedula,outfit,accesorios,shoes):
     ventana_outfit = Toplevel()
     ventana_outfit.config(bg = "pink")
@@ -500,7 +496,6 @@ def guardarOutfit(cedula, outfit, accesorios,shoes):
     archivo.close()
 
 def mostrar_Consulta1(ventana,cedula):
-
     ventana_consulta1 = Toplevel()
     ventana_consulta1.config(bg="pink")
     ventana_consulta1.title("Report")
@@ -535,10 +530,10 @@ def Consulta_1(carpeta,indice,comp):
             archi.close()
     return resultados
 
-a= Consulta_1('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"Rostro 3\n")
+a= Consulta_1('C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"++Rostro 3\n")
 cont=0
 for i in a:
-    archivo= open('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
+    archivo= open('C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
     lineas= archivo.readlines()
     cont+=1
     print(lineas)

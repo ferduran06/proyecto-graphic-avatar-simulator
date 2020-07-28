@@ -1,0 +1,5 @@
+INFORMATION AVATAR
+Genero 0
+Color Piel 1
+Pelo 2
+Color Pelo 2
