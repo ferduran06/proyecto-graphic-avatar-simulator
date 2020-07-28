@@ -1,8 +1,7 @@
 from tkinter import *
 import os
 from tkinter import messagebox as MessageBox
-
-path = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
+path = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
 files = os.listdir(path)
 
 
@@ -536,10 +535,10 @@ def Consulta_1(carpeta,indice,comp):
             archi.close()
     return resultados
 
-a= Consulta_1('C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"Rostro 3\n")
+a= Consulta_1('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"Rostro 3\n")
 cont=0
 for i in a:
-    archivo= open('C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
+    archivo= open('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
     lineas= archivo.readlines()
     cont+=1
     print(lineas)
