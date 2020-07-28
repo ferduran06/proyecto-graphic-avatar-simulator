@@ -134,54 +134,67 @@ def ventanaPrincipal():
 
     Button(ventana, text="LOGIN",command = lambda:ingresar(ventana,entry_nombre_usuario,entry_contraseña,entry_nombre_usuario.get(),entry_contraseña.get()),font="Arial, 13").pack(padx=5, pady=10)
     Button(ventana, text="EXIT", font="Arial, 11").pack(padx=0, pady=0)
-    ventana.mainloop()  # para que la ventana no se cierre la ventana
+    ventana.mainloop()
 
-def ingresar(v,e1,e2, nombre,contrasenna):
+def admin(v,nombre):
+    ventana_ingresar = Toplevel()
+    ventana_ingresar.config(background="pink")
+    ventana_ingresar.title("Administrator")
+    ventana_ingresar.geometry("500x400")
 
-    if nombre == "fer" and contrasenna =="123":
+    Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20, pady=40)
+    saludo = ("Welcome " + nombre)
 
-        ventana_ingresar = Toplevel()
-        ventana_ingresar.config(background="pink")
-        ventana_ingresar.title("Administrator")
-        ventana_ingresar.geometry("500x400")
+    Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
+    Button(ventana_ingresar, text="Create Avatar", command=lambda: createAvatar(ventana_ingresar),
+           font="Arial, 11").pack(padx=10, pady=20)
 
-        Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)
-        saludo = ("Welcome " + nombre)
-        Label(ventana_ingresar,bg = "pink", text=saludo,font="Arial, 15").pack()
-        Button(ventana_ingresar, text="Create Avatar",command = lambda:createAvatar(ventana_ingresar),font="Arial, 11").pack(padx=10, pady=20)
-        Button(ventana_ingresar, text="Dress up Avatar",command = lambda:dressingAvatar(ventana_ingresar),font="Arial, 11").pack(padx=10, pady=20)
-        v.withdraw()
-
-    elif nombre == "Vero" and contrasenna == "1234":
-
-        ventana_ingresar = Toplevel()
-        ventana_ingresar.config(background="pink")
-        ventana_ingresar.title("Analyst")
-        ventana_ingresar.geometry("500x400")
-
-        Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)
-        saludo = ("Welcome " + nombre)
-        Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
-        Button(ventana_ingresar, text="Report 1", font="Arial, 11").pack(padx=10, pady=20)
-        Button(ventana_ingresar, text="Report 2", font="Arial, 11").pack(padx=10, pady=20)
-        v.withdraw()
-    else:
-        MessageBox.showerror("Error","INVALID DATA. TRY AGAIN")
+    Button(ventana_ingresar, text="Dress up Avatar", command=lambda: dressingAvatar(ventana_ingresar),
+           font="Arial, 11").pack(padx=10, pady=20)
 
     def regresar():
         ventana_ingresar.destroy()
         v.deiconify()
 
-    Button(ventana_ingresar, text="Exit",font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
-    v.wait_window(ventana_ingresar)
+    Button(v, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
+    v.withdraw()
+
+def analista(v,nombre):
+    ventana_ingresar = Toplevel()
+    ventana_ingresar.config(background="pink")
+    ventana_ingresar.title("Analyst")
+    ventana_ingresar.geometry("500x400")
+
+    Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20, pady=40)
+    saludo = ("Welcome " + nombre)
+    Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
+    Button(ventana_ingresar, text="Report 1", font="Arial, 11").pack(padx=10, pady=20)
+    Button(ventana_ingresar, text="Report 2", font="Arial, 11").pack(padx=10, pady=20)
+    v.destroy()
+
+    def regresar():
+        ventana_ingresar.destroy()
+        v.deiconify()
+
+    Button(v, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
+    v.withdraw()
+
+def ingresar(v,e1,e2, nombre,contrasenna):
+
+    if nombre == "fer" and contrasenna =="123":
+        admin(v,nombre)
+
+    elif nombre == "Vero" and contrasenna == "1234":
+        analista(v,nombre)
+
+    else:
+        MessageBox.showerror("Error", "INVALID DATA. TRY AGAIN")
 
 def creaciontxt(id):
-
     archi = open(str(id)+'.txt', 'w')
     archi.close()
 
 def createAvatar(ventana):
-
     ventana_create = Toplevel()
     ventana_create.config(bg = "pink")
     ventana_create.title("Create Avatar")
@@ -195,7 +208,7 @@ def createAvatar(ventana):
     cedula.pack(padx=10, pady=10)
     Button(ventana_create, command =lambda :registerFace(ventana,cedula,cedula.get()),text="Next",font="Arial, 11").pack(padx=10,pady=20)
 
-    ventana_create.mainloop()
+    ventana.withdraw()
 
 def registerFace(v,c,cedula):
     ventana_face = Toplevel()
@@ -218,8 +231,7 @@ def registerFace(v,c,cedula):
         Radiobutton(ventana_face,bg="pink",text=i,variable=selected,value=c,font="Arial, 12").pack()
         c += 1
     Button(ventana_face, command =lambda :registerSkin(ventana_face,cedula,selected.get()),text="Next",font="Arial, 11").pack(padx=10,pady=20)
-    ventana_face.mainloop()
-
+    v.destroy()
 
 def registerSkin(ventana,cedula,faces):
     skin = Piel()
@@ -242,7 +254,7 @@ def registerSkin(ventana,cedula,faces):
 
     Button(ventana_skin, command=lambda: registerHair(ventana_skin, cedula, faces,selected.get()), text="Next",
            font="Arial, 11").pack(padx=10, pady=20)
-    ventana_skin.mainloop()
+    ventana.destroy()
 
 def registerHair(ventana,cedula,faces,skin):
 
@@ -263,7 +275,7 @@ def registerHair(ventana,cedula,faces,skin):
         c += 1
     Button(ventana_hair, command=lambda: registerEyes(ventana_hair, cedula, faces, skin,selected.get()), text="Next",
            font="Arial, 11").pack(padx=10, pady=20)
-    ventana_hair.mainloop()
+    ventana.destroy()
 
 
 def registerEyes(ventana,cedula,faces,skin,hair):
@@ -287,8 +299,7 @@ def registerEyes(ventana,cedula,faces,skin,hair):
         c += 1
     Button(ventana_eyes, command=lambda: registerGender(ventana_eyes, cedula, faces,skin,hair, selected.get()), text="Next",
            font="Arial, 11").pack(padx=10, pady=20)
-    ventana_eyes.mainloop()
-
+    ventana.destroy()
 
 def registerGender(ventana,cedula,faces,skin,hair,eyes):
 
@@ -310,13 +321,17 @@ def registerGender(ventana,cedula,faces,skin,hair,eyes):
     Button(ventana_gender, command=lambda: mostrarInfor(ventana_gender, cedula, faces, skin, hair,eyes, selected.get()),
            text="Next",
            font="Arial, 11").pack(padx=10, pady=20)
-    ventana_gender.mainloop()
 
-def validarId(c,cedula):
+    ventana.destroy()
+
+def validarId(v,cedula):
     id = str(cedula)+'.txt'
-    for txt in files:
-        if id == txt:
-            MessageBox.showerror("Error", "THIS ID IS NOT REGISTERED")
+    with os.scandir(path) as ficheros:
+        for fichero in ficheros:
+            if id  == fichero:
+                dressOutfit(v,cedula)
+            else:
+                MessageBox.showerror("Error", "THIS ID IS NOT REGISTERED")
 
 def mostrarRostro(faces):
 
@@ -342,6 +357,7 @@ def mostrarGenero(gender):
 
     genero = Genero()
     return genero.getgeneros(gender)
+
 
 def guardarDatos(cedula,gender,faces,skin,hair,eyes):
     nombreTxt = str(cedula)+".txt"
@@ -393,8 +409,9 @@ def mostrarInfor(ventana,cedula,faces,skin,hair,eyes,gender):
 
     guardarDatos(cedula,gender,faces,skin,hair,eyes)
 
-    Button(ventana_gender, text="Exit",font="Arial,11", command=lambda: ventanaPrincipal() ).pack(padx=0, pady=20)
+    Button(ventana_gender, text="Exit",font="Arial,11", command=lambda: admin(ventana_gender,cedula) ).pack(padx=0, pady=20)
 
+    ventana.destroy()
 
 def dressingAvatar(ventana):
 
@@ -410,12 +427,12 @@ def dressingAvatar(ventana):
     cedula = Entry(ventana_create, font="Arial, 13")
     cedula.pack(padx=10, pady=10)
 
-    Button(ventana_create, command =lambda :dressOutfit(ventana,cedula,cedula.get()),text="Next",font="Arial, 11").pack(padx=10,pady=20)
 
-    ventana_create.mainloop()
+    Button(ventana_create, command =lambda:validarId(ventana_create,cedula),text="Next",font="Arial, 11").pack(padx=10,pady=20)
+    ventana.destroy()
 
+def dressOutfit(v,cedula):
 
-def dressOutfit(ventana,c,cedula):
     vestuarios = Vestuario()
     c = 0
     selected = IntVar()
@@ -435,7 +452,7 @@ def dressOutfit(ventana,c,cedula):
 
     Button(ventana_outfit,command=lambda: dressAccesory(ventana_outfit,cedula,selected.get()),text="Next",
            font="Arial, 11").pack(padx=10, pady=20)
-    ventana_outfit.mainloop()
+    v.destroy()
 
 
 def dressAccesory(ventana,cedula,outfit):
@@ -457,7 +474,7 @@ def dressAccesory(ventana,cedula,outfit):
         c += 1
     Button(ventana_accesory, text="Next",command=lambda:dressShoes(ventana_accesory,cedula,outfit,selected.get()), font="Arial, 11").pack(padx=10,
                                                                                                              pady=20)
-    ventana.withdraw()
+    ventana.destroy()
 
 def dressShoes(ventana,cedula,outfit,accesorios):
     vestuarios = Vestuario()
@@ -476,7 +493,7 @@ def dressShoes(ventana,cedula,outfit,accesorios):
         Radiobutton(ventana_shoes,bg="pink",text=i,variable=selected,value=c,font="Arial, 12").pack()
         c += 1
     Button(ventana_shoes, text="Next", command=lambda:mostrarOutfit(ventana,cedula,outfit,accesorios,selected.get()), font="Arial, 11").pack(padx=10,pady=20)
-    ventana.withdraw()
+    ventana.destroy()
 
 def mostrarOutfits(outfit):
 
@@ -517,7 +534,7 @@ def mostrarOutfit(ventana,cedula,outfit,accesorios,shoes):
 
     guardarOutfit(cedula, outfit, accesorios,shoes)
     Button(ventana_outfit, text="Exit", font="Arial,11", command=lambda: ventanaPrincipal()).pack(padx=0, pady=20)
-    ventana_outfit.mainloop()
+    ventana.destroy()
 
 def guardarOutfit(cedula, outfit, accesorios,shoes):
     nombreTxt = str(cedula) + ".txt"
