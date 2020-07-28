@@ -141,8 +141,7 @@ def admin(v,nombre):
         ventana_ingresar.destroy()
         v.deiconify()
 
-
-    Button(v, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
+    Button(ventana_ingresar, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
     v.withdraw()
 
 def analista(v,nombre):
@@ -151,23 +150,18 @@ def analista(v,nombre):
     ventana_ingresar.title("Analyst")
     ventana_ingresar.geometry("500x400")
 
-    Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20, pady=40)
-    saludo = ("Welcome " + nombre)
-    Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
-    Button(ventana_ingresar, text="Report 1", font="Arial, 11").pack(padx=10, pady=20)
-    Button(ventana_ingresar, text="Report 2", font="Arial, 11").pack(padx=10, pady=20)
-    v.destroy()
-
-    ventana_ingresar = Toplevel()
-    ventana_ingresar.config(background="pink")
-    ventana_ingresar.title("Analyst")
-    ventana_ingresar.geometry("500x400")
-
     Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)
     saludo = ("Welcome " + nombre)
+
     Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
-    Button(ventana_ingresar, text="Report 1", command= lambda:mostrar_Consulta1(ventana_ingresar),font="Arial, 11").pack(padx=10, pady=20)
-    Button(ventana_ingresar, text="Report 2", command= lambda:mostrar_Consulta2(ventana_ingresar),font="Arial, 11").pack(padx=10, pady=20)
+    Button(ventana_ingresar, text="Report 1", command= lambda:mostrar_Consulta1(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
+    Button(ventana_ingresar, text="Report 2", command= lambda:mostrar_Consulta2(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
+
+    def regresar():
+        ventana_ingresar.destroy()
+        v.deiconify()
+
+    Button(ventana_ingresar, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
     v.withdraw()
 
 
@@ -506,27 +500,29 @@ def guardarOutfit(cedula, outfit, accesorios,shoes):
     archivo.write("Zapatos " + str(shoes) + '\n')
     archivo.close()
 
-def mostrar_Consulta1(ventana):
+def mostrar_Consulta1(ventana,cedula):
+
     ventana_consulta1 = Toplevel()
     ventana_consulta1.config(bg="pink")
-    ventana_consulta1.title("Create Avatar")
+    ventana_consulta1.title("Report")
     ventana_consulta1.geometry("400x400")
     Label(ventana_consulta1, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
     Label(ventana_consulta1, bg="pink", text="REPORT 1", font="Arial, 15").pack()
 
-    Button(ventana_consulta1, text="Consulta Genero", font= "Arial 11", command=lambda: ventanaPrincipal()).pack(padx=0, pady=20)
-    ventana_consulta1.mainloop()
+    Button(ventana_consulta1, text="Gender Consultation", font= "Arial 13", command=lambda: analista(ventana,cedula)).pack(padx=0, pady=20)
+    ventana.destroy()
 
-def mostrar_Consulta2(ventana):
+def mostrar_Consulta2(ventana,cedula):
+
     ventana_consulta2 = Toplevel()
     ventana_consulta2.config(bg="pink")
-    ventana_consulta2.title("Create Avatar")
+    ventana_consulta2.title("Report")
     ventana_consulta2.geometry("400x400")
     Label(ventana_consulta2, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
     Label(ventana_consulta2, bg="pink", text="REPORT 2", font="Arial, 15").pack()
 
-    Button(ventana_consulta2, text="Consulta Cabello", font= "Arial 11", command=lambda: ventanaPrincipal()).pack(padx=0, pady=20)
-    ventana_consulta2.mainloop()
+    Button(ventana_consulta2, text="Consult Hair", font= "Arial 13", command=lambda: analista(ventana,cedula)).pack(padx=0, pady=20)
+    ventana.destroy()
 
 def Consulta_1(carpeta,indice,comp):
     resultados=[]
@@ -548,25 +544,7 @@ for i in a:
     cont+=1
     print(lineas)
 
-def Consulta_2(carpeta,indice,comp):
-    resultados=[]
-    with os.scandir(carpeta) as ficheros:
-        for fichero in ficheros:
-            archi = open(fichero)
-            lineas = archi.readlines()
 
-            if lineas[indice] == comp:
-                resultados.append(fichero.name)
-            archi.close()
-    return resultados
-
-a= Consulta_2('C:/Users/ma210O/neDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"Rostro 4")
-cont=0
-for i in a:
-    archivo= open('C:/Users/ma210O/neDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
-    lineas= archivo.readlines()
-    cont+=1
-    print(lineas)
 def main():
     ventanaPrincipal()
 
