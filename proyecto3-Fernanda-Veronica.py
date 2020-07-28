@@ -9,10 +9,9 @@ files = os.listdir(path)
 class Vestuario:
     def __init__(self):
         self.vestuario = {
-            "accesorios": ["Lentes", "Reloj", "Brazalete", "Cadena", "Aretes","Sombrero", "Ninguno"],
+            "accesorios": ["Lentes", "Reloj", "Brazalete", "Cadena","Sombrero", "Ninguno"],
             "ropa": ["Formal", "Casual", "Deportivo", "Baño", "Etiqueta"],
-            "calzado": ["Botas", "Tenis", "Zapatilla", "Mocasines",  "Pantuflas",
-                        "Tacones"]}  # Attributes assigned
+            "calzado": ["Botas", "Tenis", "Zapatilla", "Mocasines","Tacones"]}  # Attributes assigned
 
     def setAccesorios(self, accesorios):  # Assign value in the dictionary in the accessories position
         self.vestuario["accesorios"] = accesorios
@@ -43,7 +42,7 @@ class Vestuario:
 
 class Rostro:
     def __init__(self):
-        self.rostro = ["Redondo", "Alargado", "Corazón", "Cuadrado", "Ovalado", "Rectangular"]  # Attributes assigned
+        self.rostro = ["Redondo", "Alargado", "Corazón", "Cuadrado", "Ovalado"]  # Attributes assigned
 
     def set(self, rostro):
         self.rostro = rostro
@@ -56,7 +55,7 @@ class Rostro:
 
 class Piel:
     def __init__(self):
-        self.piel = ["Negra", "Marrón", "Morena", "Clara", "Blanca"]  # Attributes assigned
+        self.piel = ["Negra", "Marrón", "Morena", "Blanca"]  # Attributes assigned
 
     def set(self, piel):
         self.piel = piel
@@ -82,8 +81,7 @@ class Cabello:
 
 class Ojos:
     def __init__(self):
-        self.ojos = ["Almendrados", "Separados", "Redondos", "Caídos", "Saltones", "Juntos", "Profundos",
-                     "Asiático"]  # Attributes assigned
+        self.ojos = ["Almendrados", "Redondos", "Caídos", "Saltones","Asiático"]  # Attributes assigned
 
     def setFormaOjos(self, formaOjos):
         self.ojos = formaOjos  # Assign value in the dictionary in the eye shape position
