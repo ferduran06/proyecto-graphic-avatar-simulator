@@ -1,3 +1,4 @@
 INFORMACION GENERAL
-Rostro 5
+Rostro 3
 Cabello 2
+Genero 1
