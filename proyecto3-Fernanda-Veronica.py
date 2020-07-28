@@ -2,18 +2,16 @@ from tkinter import *
 import os
 from tkinter import messagebox as MessageBox
 
-path = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator'
+path = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS'
 files = os.listdir(path)
 
 
 class Vestuario:
     def __init__(self):
         self.vestuario = {
-            "accesorios": ["Lentes", "Reloj", "Brazalete", "Piercing", "Cadena", "Aretes", "Anillo", "Cintorón",
-                           "Sombrero", "Ninguno"],
-            "ropa": ["Formal", "Informal", "Casual", "Deportivo", "Baño", "Etiqueta", "Invierno", "Trabajo",
-                     "Uniforme"],
-            "calzado": ["Botas", "Tenis", "Zapatilla", "Sandalias", "Mocasines", "Náuticos", "Pantuflas",
+            "accesorios": ["Lentes", "Reloj", "Brazalete", "Cadena", "Aretes","Sombrero", "Ninguno"],
+            "ropa": ["Formal", "Casual", "Deportivo", "Baño", "Etiqueta"],
+            "calzado": ["Botas", "Tenis", "Zapatilla", "Mocasines",  "Pantuflas",
                         "Tacones"]}  # Attributes assigned
 
     def setAccesorios(self, accesorios):  # Assign value in the dictionary in the accessories position
@@ -162,8 +160,8 @@ def ingresar(v,e1,e2, nombre,contrasenna):
         Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)
         saludo = ("Welcome " + nombre)
         Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
-        Button(ventana_ingresar, text="Report 1", font="Arial, 11").pack(padx=10, pady=20)
-        Button(ventana_ingresar, text="Report 2", font="Arial, 11").pack(padx=10, pady=20)
+        Button(ventana_ingresar, text="Report 1", command= lambda:mostrar_Consulta1(ventana_ingresar),font="Arial, 11").pack(padx=10, pady=20)
+        Button(ventana_ingresar, text="Report 2", command= lambda:mostrar_Consulta2(ventana_ingresar),font="Arial, 11").pack(padx=10, pady=20)
         v.withdraw()
     else:
         MessageBox.showerror("Error","INVALID DATA. TRY AGAIN")
@@ -528,6 +526,67 @@ def guardarOutfit(cedula, outfit, accesorios,shoes):
     archivo.write("Zapatos " + str(shoes) + '\n')
     archivo.close()
 
+def mostrar_Consulta1(ventana):
+    ventana_consulta1 = Toplevel()
+    ventana_consulta1.config(bg="pink")
+    ventana_consulta1.title("Create Avatar")
+    ventana_consulta1.geometry("400x400")
+    Label(ventana_consulta1, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
+    Label(ventana_consulta1, bg="pink", text="REPORT 1", font="Arial, 15").pack()
+
+    Button(ventana_consulta1, text="Consulta Genero", font= "Arial 11", command=lambda: ventanaPrincipal()).pack(padx=0, pady=20)
+    ventana_consulta1.mainloop()
+
+def mostrar_Consulta2(ventana):
+    ventana_consulta2 = Toplevel()
+    ventana_consulta2.config(bg="pink")
+    ventana_consulta2.title("Create Avatar")
+    ventana_consulta2.geometry("400x400")
+    Label(ventana_consulta2, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
+    Label(ventana_consulta2, bg="pink", text="REPORT 2", font="Arial, 15").pack()
+
+    Button(ventana_consulta2, text="Consulta Cabello", font= "Arial 11", command=lambda: ventanaPrincipal()).pack(padx=0, pady=20)
+    ventana_consulta2.mainloop()
+
+def Consulta_1(carpeta,indice,comp):
+    resultados=[]
+    with os.scandir(carpeta) as ficheros:
+        for fichero in ficheros:
+            archi = open(fichero)
+            lineas = archi.readlines()
+
+            if lineas[indice] == comp:
+                resultados.append(fichero.name)
+            archi.close()
+    return resultados
+
+a= Consulta_1("C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS",2,"Rostro 3\n")
+cont=0
+for i in a:
+    archivo= open("C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/"+a[cont])
+    lineas= archivo.readlines()
+    cont+=1
+    print(lineas)
+
+def Consulta_2(carpeta,indice,comp):
+    resultados=[]
+    with os.scandir(carpeta) as ficheros:
+        for fichero in ficheros:
+            archi = open(fichero)
+            lineas = archi.readlines()
+
+            if lineas[indice] == comp:
+                resultados.append(fichero.name)
+            archi.close()
+    return resultados
+
+a= Consulta_2("C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS",2,"Rostro 4\n")
+cont=0
+for i in a:
+    archivo= open("C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/"+a[cont])
+    lineas= archivo.readlines()
+    cont+=1
+    print(lineas)
 def main():
     ventanaPrincipal()
 
