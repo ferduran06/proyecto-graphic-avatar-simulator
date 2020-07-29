@@ -1,13 +1,8 @@
 INFORMATION AVATAR
-Genero 0
-Rostro 0
+Genero 1
 Color Piel 0
 Pelo 0
-Ojos 0
-INFORMATION AVATAR
-Atuendo 1
-Accesorio 2
-Zapatos 4
+Color Pelo 0
 INFORMATION AVATAR
 Atuendo 2
 Accesorio 4
