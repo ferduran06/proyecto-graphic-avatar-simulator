@@ -4,7 +4,7 @@ from PIL import Image, ImageTk
 
 from tkinter import messagebox as MessageBox
 
-path = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
+path = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS'
 files = os.listdir(path)
 
 class Vestuario:
@@ -93,24 +93,25 @@ class Genero:
     def getgeneros(self, indice):
         return self.genero[indice]
 
+"""
+Function that prints the main window for users
+"""
+
 def ventanaPrincipal():
     ventana = Tk()  # ventana padre
     ventana.config(background="pink")
     ventana.title("Graphic avatar simulator")
     ventana.geometry("600x400")  # el tamaño
 
-    # direccion = PhotoImage(file="avion.png")  # dirección de la imagen
-    # imagen = Label(ventana, image=direccion).place(x=0, y=0)  # .place(x,y) uno le dice en qué posición lo quiere
-
     #TITULO
     label1 = Label(ventana, background="pink", text="Welcome Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)  #.pack() lo centra
 
-    #DIGITAR EL USUARIO
+    #DIGIT USER
     Label(ventana, background="pink",text="User", font="Arial, 15").pack(padx=5, pady=5)  # .pack() lo centra
     entry_nombre_usuario = Entry(ventana, font="Arial, 12")
     entry_nombre_usuario.pack(padx=5, pady=5)
 
-    #DIGITAR LA CONTRASEÑA
+    #DIGIT PASSWORD
     Label(ventana, background="pink", text="Password", font="Arial, 15").pack(padx=5, pady=5)  # .pack() lo centra
     entry_contraseña = Entry(ventana, show="*", font="Arial, 12")
     entry_contraseña.pack(padx=5, pady=5)
@@ -120,6 +121,10 @@ def ventanaPrincipal():
     Button(ventana, text="EXIT", font="Arial, 11").pack(padx=0, pady=0)
     ventana.mainloop()
 
+"""
+Function that prints the window where the administrator can see your options
+It receives as parameter the name
+"""
 def admin(v,nombre):
     ventana_ingresar = Toplevel()
     ventana_ingresar.config(background="pink")
@@ -143,27 +148,34 @@ def admin(v,nombre):
     Button(ventana_ingresar, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
     v.withdraw()
 
+"""
+Function that prints the window where the analyst could see his options
+It receives as parameter the name
+"""
 def analista(v,nombre):
-    ventana_ingresar = Toplevel()
-    ventana_ingresar.config(background="pink")
-    ventana_ingresar.title("Analyst")
-    ventana_ingresar.geometry("500x400")
+    ventana_analista = Toplevel()
+    ventana_analista.config(background="pink")
+    ventana_analista.title("Analyst")
+    ventana_analista.geometry("500x400")
 
-    Label(ventana_ingresar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)
+    Label(ventana_analista, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20,pady=40)
     saludo = ("Welcome " + nombre)
 
-    Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
-    Button(ventana_ingresar, text="Report 1: GENDER", command= lambda:mostrar_Consulta1(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
-    Button(ventana_ingresar, text="Report 2: SKIN", command= lambda:mostrar_Consulta2(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
+    Label(ventana_analista, bg="pink", text=saludo, font="Arial, 15").pack()
+    Button(ventana_analista, text="Report 1: GENDER", command= lambda:mostrar_Consulta1(ventana_analista,nombre),font="Arial, 11").pack(padx=10, pady=20)
+    Button(ventana_analista, text="Report 2: SKIN", command= lambda:mostrar_Consulta2(ventana_analista,nombre),font="Arial, 11").pack(padx=10, pady=20)
 
     def regresar():
-        ventana_ingresar.destroy()
+        ventana_analista.destroy()
         v.deiconify()
 
-    Button(ventana_ingresar, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
-    v.withdraw()
+    Button(ventana_analista, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
+    v.wait_window(ventana_analista)
 
-
+"""
+Function that validates that are the real users to be able to enter
+Receive the user and password as a parameter
+"""
 def ingresar(v,e1,e2, nombre,contrasenna):
 
     if nombre == "fer" and contrasenna =="123":
@@ -175,10 +187,16 @@ def ingresar(v,e1,e2, nombre,contrasenna):
     else:
         MessageBox.showerror("Error", "INVALID DATA. TRY AGAIN")
 
+"""
+Function that creates the txt files depending on the ID
+"""
 def creaciontxt(id):
-    archi = open(str(id)+'.txt', 'w')
+    archi = open(str(id)+'.txt', 'w')                   #Pass the ID to string to add to the name
     archi.close()
 
+"""
+Window that asks the user for the id to register
+"""
 def createAvatar(ventana):
     ventana_create = Toplevel()
     ventana_create.config(bg = "pink")
@@ -195,6 +213,10 @@ def createAvatar(ventana):
 
     ventana.withdraw()
 
+"""
+Function that shows the list of skin color types for the user
+Receive the ID as a parameter, to be registered
+"""
 def registerSkin(ventana,c,cedula):
     skin = Piel()
     c = 0
@@ -218,8 +240,12 @@ def registerSkin(ventana,c,cedula):
            font="Arial, 11").pack(padx=10, pady=20)
     ventana.destroy()
 
-def registerHair(ventana,cedula,skin):
 
+"""
+Function that shows the list of hair texture types for the user
+Receive the ID,skin as a parameter, to be registered
+"""
+def registerHair(ventana,cedula,skin):
     hair = Cabello()
     c = 0
 
@@ -239,9 +265,11 @@ def registerHair(ventana,cedula,skin):
            font="Arial, 11").pack(padx=10, pady=20)
     ventana.destroy()
 
-
+"""
+Function that shows the list of eye shape types for the user
+Receive the I,skin,hair as a parameter, to be registered
+"""
 def registerEyes(ventana,cedula,skin,hair):
-
     colorHair = ColorCabello()
     c = 0
 
@@ -263,8 +291,11 @@ def registerEyes(ventana,cedula,skin,hair):
            font="Arial, 11").pack(padx=10, pady=20)
     ventana.destroy()
 
+"""
+Function that shows the list of gender types for the user
+Receive the I,skin,hair,eyes as a parameter, to be registered
+"""
 def registerGender(ventana,cedula,skin,hair,eyes):
-
     gender = Genero()
     c = 0
     selected = IntVar()
@@ -286,6 +317,10 @@ def registerGender(ventana,cedula,skin,hair,eyes):
 
     ventana.destroy()
 
+"""
+Function that validates if the ID exists to be able to dress the user
+Receives the ID as parameter
+"""
 def validarId(v,c,cedula):
     id = str(cedula)+'.txt'
     with os.scandir(path) as ficheros:
@@ -295,23 +330,35 @@ def validarId(v,c,cedula):
             elif fichero== "":
                 MessageBox.showerror("Error", "THIS ID IS NOT REGISTERED")
 
+"""
+Function that searches the skin colors list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
 def mostrarColor(skin):
-
     piel = Piel()
     return piel.getPielIndice(skin)
 
+"""
+Function that searches the texture hair list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
 def mostrarCabello(hair):
-
     cabello = Cabello()
     return cabello.getTexturaIndice(hair)
 
+"""
+Function that searches the  hair colors list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
 def mostrarOjos(hairs):
-
     colorHairs = ColorCabello()
     return colorHairs.getColorCabelloIndice(hairs)
 
+"""
+Function that searches the  gender list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
 def mostrarGenero(gender):
-
     genero = Genero()
     return genero.getgeneros(gender)
 
@@ -325,8 +372,11 @@ def guardarDatos(cedula,gender,skin,hair,eyes):
     archivo.write("Color Pelo "+ str(eyes) + '\n')
     archivo.close()
 
+"""
+Function that shows the information of each avatar from the index number
+Receive as a parameter, the ID, and the index of the skin, hair,eyes and gender.
+"""
 def mostrarInfor(ventana,cedula,skin,hair,eyes,gender):
-
     ventana_gender = Toplevel()
     ventana_gender.config(bg = "pink")
     ventana_gender.title("Create Avatar")
@@ -359,11 +409,13 @@ def mostrarInfor(ventana,cedula,skin,hair,eyes,gender):
     Label(ventana_gender, bg="pink", text=eye, font="Arial, 12").pack()
 
     guardarDatos(cedula,gender,skin,hair,eyes)
-
     Button(ventana_gender, text="Exit",font="Arial,11", command=lambda: admin(ventana_gender,cedula) ).pack(padx=0, pady=20)
 
     ventana.destroy()
 
+"""
+Window that requests the id to be able to validate the identity card and to be able to dress the user
+"""
 def dressingAvatar(ventana):
 
     ventana_create = Toplevel()
@@ -764,7 +816,6 @@ def mostrarOutfit(ventana,cedula,outfit,accesorios,shoes):
 
     guardarOutfit(cedula, outfit, accesorios,shoes)
     Button(ventana_outfit, text="Exit", font="Arial,11", command=lambda: admin(ventana,cedula)).pack(padx=0, pady=20)
-
     ventana.destroy()
 
 """
@@ -780,6 +831,9 @@ def guardarOutfit(cedula, outfit, accesorios,shoes):
     archivo.write("Zapatos " + str(shoes) + '\n')
     archivo.close()
 
+"""
+Shows the reports in a window
+"""
 def mostrar_Consulta1(ventana,cedula):
     ventana_consulta1 = Toplevel()
     ventana_consulta1.config(bg="pink")
@@ -795,15 +849,16 @@ def mostrar_Consulta1(ventana,cedula):
             archi = open(fichero)
             lineas = archi.readlines()
             if lineas[1] == 'Genero 0\n':
-
                 cont += 1
 
-
-
         Label(ventana_consulta1,bg="pink",text=cont, font="Arial, 15").pack()
-
+    Button(ventana_consulta1, text="Exit", font="Arial,11", command=lambda: analista(ventana, cedula)).pack(padx=0,
+                                                                                                            pady=20)
     ventana.destroy()
 
+"""
+Shows the reports in a window
+"""
 def mostrar_Consulta2(ventana,cedula):
     ventana_consulta2 = Toplevel()
     ventana_consulta2.config(bg="pink")
@@ -819,108 +874,15 @@ def mostrar_Consulta2(ventana,cedula):
             archi = open(fichero)
             lineas = archi.readlines()
             if lineas[2] == 'Color Piel 0\n':       #Compare if the color skin match
-
                 cont += 1                           #For count hoy many avatars has the black skin
 
-
-
         Label(ventana_consulta2,bg="pink",text=cont, font="Arial, 15").pack()
-
+    Button(ventana_consulta2, text="Exit", font="Arial,11", command=lambda: analista(ventana, cedula)).pack(padx=0,
+                                                                                                            pady=20)
     ventana.destroy()
-"""
-Shows the reports in a window
-"""
-def Consulta_1(indice,comp):
-    carpeta = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
-    resultados=[]
-    with os.scandir(carpeta) as ficheros:
-        for fichero in ficheros:
-            archi = open(fichero)       #Access to the files
-            lineas = archi.readlines()
-
-            if lineas[indice] == comp:  #Compare if the gender match
-                resultados.append(fichero.name)
-
-            archi.close()
-
-    return resultados
-
-a= Consulta_1(1,"Genero 0\n")
-
-"""
-Second Report: Will shows a report with how many avatars has "black skin"
-"""
-def Consulta_2(indice,comp):
-    carpeta = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
-    resultados = []
-    with os.scandir(carpeta) as ficheros:
-        for fichero in ficheros:
-            archi = open(fichero)
-            lineas = archi.readlines()
-
-            if lineas[indice] == comp:              #Compare if the color skin match
-                resultados.append(fichero.name)
-
-            archi.close()
-
-    return resultados
-b = Consulta_1(2, "Color Piel 0\n")
 
 def main():
     ventanaPrincipal()
 
 main()
-
-
-
-"""
-Shows the reports in a window
-"""
-def mostrar_Consulta1(ventana,cedula):
-    ventana_consulta1 = Toplevel()
-    ventana_consulta1.config(bg="pink")
-    ventana_consulta1.title("Report")
-    ventana_consulta1.geometry("400x400")
-    Label(ventana_consulta1, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
-    Label(ventana_consulta1, bg="pink", text="REPORT 1", font="Arial, 15").pack()
-    Label(ventana_consulta1, bg="pink", text="AVATARS WITH FEMALE GENDER", font="Arial, 15").pack()
-
-    cont = 0
-    with os.scandir(path) as ficheros:
-        for fichero in ficheros:
-            archi = open(fichero)           #Access to the files
-            lineas = archi.readlines()
-            if lineas[1] == 'Genero 0\n':       #Compare if the gender match
-
-                cont += 1
-
-
-
-        Label(ventana_consulta1,bg="pink",text=cont, font="Arial, 15").pack()
-
-    ventana.destroy()
-
-def mostrar_Consulta2(ventana,cedula):
-    ventana_consulta2 = Toplevel()
-    ventana_consulta2.config(bg="pink")
-    ventana_consulta2.title("Report")
-    ventana_consulta2.geometry("400x400")
-    Label(ventana_consulta2, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
-    Label(ventana_consulta2, bg="pink", text="REPORT 2", font="Arial, 15").pack()
-
-    Label(ventana_consulta2, bg="pink", text="AVATAR WITH BLACK SKIN", font="Arial, 15").pack()
-    cont = 0
-    with os.scandir(path) as ficheros:
-        for fichero in ficheros:
-            archi = open(fichero)
-            lineas = archi.readlines()
-            if lineas[2] == 'Color Piel 0\n':  # Validate that the position matches the reques
-
-                cont += 1
-
-
-
-        Label(ventana_consulta2,bg="pink",text=cont, font="Arial, 15").pack()
-
-    ventana.destroy()
 
