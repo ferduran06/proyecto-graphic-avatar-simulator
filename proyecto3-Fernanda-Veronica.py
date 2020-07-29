@@ -153,8 +153,8 @@ def analista(v,nombre):
     saludo = ("Welcome " + nombre)
 
     Label(ventana_ingresar, bg="pink", text=saludo, font="Arial, 15").pack()
-    Button(ventana_ingresar, text="Report 1", command= lambda:mostrar_Consulta1(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
-    Button(ventana_ingresar, text="Report 2", command= lambda:mostrar_Consulta2(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
+    Button(ventana_ingresar, text="Report 1: GENDER", command= lambda:mostrar_Consulta1(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
+    Button(ventana_ingresar, text="Report 2: SKIN", command= lambda:mostrar_Consulta2(ventana_ingresar,nombre),font="Arial, 11").pack(padx=10, pady=20)
 
     def regresar():
         ventana_ingresar.destroy()
@@ -759,6 +759,20 @@ def mostrar_Consulta1(ventana,cedula):
     ventana_consulta1.geometry("400x400")
     Label(ventana_consulta1, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
     Label(ventana_consulta1, bg="pink", text="REPORT 1", font="Arial, 15").pack()
+    Label(ventana_consulta1, bg="pink", text="AVATARS WITH FEMALE GENDER", font="Arial, 15").pack()
+
+    cont = 0
+    with os.scandir(path) as ficheros:
+        for fichero in ficheros:
+            archi = open(fichero)
+            lineas = archi.readlines()
+            if lineas[1] == 'Genero 0\n':
+
+                cont += 1
+
+
+
+        Label(ventana_consulta1,bg="pink",text=cont, font="Arial, 15").pack()
 
     Button(ventana_consulta1, text="Gender Consultation", font= "Arial 13", command=lambda: analista(ventana,cedula)).pack(padx=0, pady=20)
     ventana.destroy()
@@ -771,6 +785,20 @@ def mostrar_Consulta2(ventana,cedula):
     ventana_consulta2.geometry("400x400")
     Label(ventana_consulta2, bg="pink",text="Graphic Avatar Simulator",font="Time, 20").pack(padx=20,pady=40)
     Label(ventana_consulta2, bg="pink", text="REPORT 2", font="Arial, 15").pack()
+
+    Label(ventana_consulta2, bg="pink", text="AVATAR WITH BLACK SKIN", font="Arial, 15").pack()
+    cont = 0
+    with os.scandir(path) as ficheros:
+        for fichero in ficheros:
+            archi = open(fichero)
+            lineas = archi.readlines()
+            if lineas[2] == 'Color Piel 0\n':
+
+                cont += 1
+
+
+
+        Label(ventana_consulta2,bg="pink",text=cont, font="Arial, 15").pack()
 
     Button(ventana_consulta2, text="Consult Hair", font= "Arial 13", command=lambda: analista(ventana,cedula)).pack(padx=0, pady=20)
     ventana.destroy()
@@ -796,6 +824,22 @@ for i in a:
     cont+=1
     print(lineas)
 
+
+def Consulta_2(indice,comp):
+    carpeta = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
+    resultados = []
+    with os.scandir(carpeta) as ficheros:
+        for fichero in ficheros:
+            archi = open(fichero)
+            lineas = archi.readlines()
+
+            if lineas[indice] == comp:
+                resultados.append(fichero.name)
+
+            archi.close()
+
+    return resultados
+b = Consulta_1(2, "Color Piel 0\n")
 
 def main():
     ventanaPrincipal()
