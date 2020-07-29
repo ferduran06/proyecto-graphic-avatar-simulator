@@ -1,6 +1,0 @@
-INFORMATION AVATAR
-Genero 0
-Rostro 2
-Color Piel 1
-Pelo 1
-Ojos 0
