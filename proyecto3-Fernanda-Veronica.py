@@ -9,9 +9,9 @@ files = os.listdir(path)
 
 class Vestuario:
     def __init__(self):
-        self.vestuario = {"accesorios": ["Lentes", "Reloj", "Gorra", "Sombrero", "Ninguno"],
-                            "ropa": ["Formal", "Casual", "Deportivo", "Bikini"],
-            "calzado": ["Tenis", "Zapatilla", "Pantuflas","Tacones"]}  # Attributes assigned
+        self.vestuario = {"accesorios": ["Lenses", "Clock", "Cap", "Hat", "None"],
+                            "ropa": ["Formal", "Casual", "Sporty", "Bikini"],
+            "calzado": ["Tennis", "Slipper", "Slippers", "Heels"]}  # Attributes assigned
 
     def setAccesorios(self, accesorios):  # Assign value in the dictionary in the accessories position
         self.vestuario["accesorios"] = accesorios
@@ -43,7 +43,7 @@ class Vestuario:
 
 class Piel:
     def __init__(self):
-        self.piel = ["Negra","Morena","Piel", "Blanca"]  # Attributes assigned
+        self.piel = ["Black", "Brunette", "Skin Color", "White"]  # Attributes assigned
 
     def set(self, piel):
         self.piel = piel
@@ -56,7 +56,7 @@ class Piel:
 
 class Cabello:
     def __init__(self):
-        self.cabello = ["Lacio", "Ondulado", "Rizado"]  # Attributes assigned
+        self.cabello = ["Straight", "Wavy", "Curly"]  # Attributes assigned
 
     def set(self, cabello):
         self.cabello = cabello
@@ -69,7 +69,7 @@ class Cabello:
 
 class ColorCabello:
     def __init__(self):
-        self.ColorCabello = ["Negro", "Castaño", "Rubia"]  # Attributes assigned
+        self.ColorCabello = ["Black","Chestnut", "Blonde"]  # Attributes assigned
 
     def setColorCabello(self, colorCabello):
         self.ColorCabello = colorCabello  # Assign value in the dictionary in the eye shape position
@@ -82,7 +82,7 @@ class ColorCabello:
 
 class Genero:
     def __init__(self):
-        self.genero = ["Femenino", "Masculino"]  # Attributes assigned
+        self.genero = ["Female", "Male"]  # Attributes assigned
 
     def set(self, genero):
         self.genero = genero
@@ -374,8 +374,11 @@ def dressingAvatar(ventana):
     Button(ventana_create, command =lambda:validarId(ventana_create,cedula,cedula.get()),text="Next",font="Arial, 11").pack(padx=10,pady=20)
     ventana.destroy()
 
+"""
+Function that shows the types of outfit that are stored in the list.
+Receive as a parameter, the ID to be stored
+"""
 def dressOutfit(v,cedula):
-
     vestuarios = Vestuario()
     c = 0
     selected = IntVar()
@@ -397,7 +400,10 @@ def dressOutfit(v,cedula):
            font="Arial, 11").pack(padx=10, pady=20)
     v.destroy()
 
-
+"""
+Function that shows the types of accessory that are stored in the list.
+Receive as a parameter, the ID, outfit to be stored
+"""
 def dressAccesory(ventana,cedula,outfit):
     vestuarios = Vestuario()
     c = 0
@@ -419,6 +425,10 @@ def dressAccesory(ventana,cedula,outfit):
                                                                                                              pady=20)
     ventana.destroy()
 
+"""
+Function that shows the types of shoes that are stored in the list.
+Receive as a parameter, the ID, outfit and accessories to be stored
+"""
 def dressShoes(ventana,cedula,outfit,accesorios):
     vestuarios = Vestuario()
     c = 0
@@ -439,34 +449,31 @@ def dressShoes(ventana,cedula,outfit,accesorios):
     Button(ventana_shoes, text="CHECK YOUR AVATAR",
            command=lambda: mostrarAvatar(ventana, cedula, outfit, accesorios, selected.get()), font="Arial, 11").pack(
         padx=10, pady=20)
-
     ventana.destroy()
 
-def mostrarOutfits(outfit):
-
-    ropa = Vestuario()
-    return ropa.getRopas(outfit)
-
+"""
+Function that prints the avatar according to the characteristics that the user fulfills and also saves the 
+information that will be stored in the respective file
+"""
 def mostrarAvatar(ventana,cedula,outif,accesorios,zapatos):
     ventana_avatar = Toplevel()
     ventana_avatar.config(bg="pink")
     ventana_avatar.title("Create Avatar")
     ventana_avatar.geometry("600x600")
+
     Label(ventana_avatar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=00, pady=10)
     Label(ventana_avatar, bg="pink", text="THIS IS YOUR AVATAR", font="Arial, 15").pack()
 
     guardarOutfit(cedula,outif,accesorios,zapatos)
-
     id = str(cedula) + '.txt'
     with os.scandir(path) as ficheros:
         for fichero in ficheros:
-            if id == fichero.name:
+            if id == fichero.name:                      #Compare if the digital ID is in the file
                     archi = open(fichero)
                     lineas = archi.readlines()
 
                     if lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 3\n' and lineas[4] == 'Color Pelo 2\n'\
                                     and lineas[6] == 'Atuendo 0\n':
-
                         img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/01.png'))
                         panel_hombre = Label(ventana_avatar, image=img_niñas, width="107", height="357")
                         panel_hombre.photo = img_niñas
@@ -694,25 +701,42 @@ def mostrarAvatar(ventana,cedula,outif,accesorios,zapatos):
         Button(ventana_avatar, text="Exit", font="Arial,11", command=lambda: admin(ventana,cedula)).pack(padx=0, pady=20)
         ventana.destroy()
 
-def mostrarAccesorios(accesorio):
+"""
+Function that searches the outfit list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
+def mostrarOutfits(outfit):
 
     ropa = Vestuario()
+    return ropa.getRopas(outfit)
 
+"""
+Function that searches the accesorry list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
+def mostrarAccesorios(accesorio):
+    ropa = Vestuario()
     return ropa.getAccesorio(accesorio)
 
+"""
+Function that searches the shoe list for the type according to its index
+Returns the name and receives the index as a parameter
+"""
 def mostrarZapatos(shoe):
-
     ropa = Vestuario()
     return ropa.getCalzados(shoe)
 
-
+"""
+Function that shows the information of each avatar from the index number
+Receive as a parameter, the ID, and the index of the outfit, accessories and shoes.
+"""
 def mostrarOutfit(ventana,cedula,outfit,accesorios,shoes):
     ventana_outfit = Toplevel()
     ventana_outfit.config(bg = "pink")
     ventana_outfit.title("Create Avatar")
     ventana_outfit.geometry("600x600")
 
-    outfits = mostrarOutfits(outfit)
+    outfits = mostrarOutfits(outfit)                    #Variables that keep the respective name according to the index
     accesorio = mostrarAccesorios(accesorios)
     shoe = mostrarZapatos(shoes)
 
@@ -733,6 +757,10 @@ def mostrarOutfit(ventana,cedula,outfit,accesorios,shoes):
 
     ventana.destroy()
 
+"""
+Function that saves the information in the respective file according to its id
+Receive as parameter, the ID, and the index of the outfit, accessories and shoes.
+"""
 def guardarOutfit(cedula, outfit, accesorios,shoes):
     nombreTxt = str(cedula) + ".txt"
     archivo = open("AVATARS/"+nombreTxt,"a")
