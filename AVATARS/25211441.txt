@@ -1,0 +1,4 @@
+INFORMACION GENERAL
+Rostro 3
+Cabello 2
+Genero 1
