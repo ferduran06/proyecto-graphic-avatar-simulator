@@ -1,16 +1,17 @@
 from tkinter import *
 import os
+from PIL import Image, ImageTk
+
 from tkinter import messagebox as MessageBox
 
-path = 'C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
+path = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
 files = os.listdir(path)
 
 class Vestuario:
     def __init__(self):
-        self.vestuario = {"accesorios": ["Lentes", "Reloj", "Brazalete", "Cadena", "Aretes","Sombrero", "Ninguno"],
-            "ropa": ["Formal", "Casual", "Deportivo", "Baño", "Bo"],
-            "calzado": ["Botas", "Tenis", "Zapatilla", "Mocasines",  "Pantuflas",
-                        "Tacones"]}  # Attributes assigned
+        self.vestuario = {"accesorios": ["Lentes", "Reloj", "Gorra", "Sombrero", "Ninguno"],
+                            "ropa": ["Formal", "Casual", "Deportivo", "Bikini"],
+            "calzado": ["Tenis", "Zapatilla", "Pantuflas","Tacones"]}  # Attributes assigned
 
     def setAccesorios(self, accesorios):  # Assign value in the dictionary in the accessories position
         self.vestuario["accesorios"] = accesorios
@@ -42,7 +43,7 @@ class Vestuario:
 
 class Piel:
     def __init__(self):
-        self.piel = ["Negra", "Marrón", "Morena", "Clara", "Blanca"]  # Attributes assigned
+        self.piel = ["Negra","Morena","Piel", "Blanca"]  # Attributes assigned
 
     def set(self, piel):
         self.piel = piel
@@ -68,7 +69,7 @@ class Cabello:
 
 class ColorCabello:
     def __init__(self):
-        self.ColorCabello = ["Negro", "Castaño", "Rubia", "Rojizo"]  # Attributes assigned
+        self.ColorCabello = ["Negro", "Castaño", "Rubia"]  # Attributes assigned
 
     def setColorCabello(self, colorCabello):
         self.ColorCabello = colorCabello  # Assign value in the dictionary in the eye shape position
@@ -316,7 +317,7 @@ def mostrarGenero(gender):
 
 def guardarDatos(cedula,gender,skin,hair,eyes):
     nombreTxt = str(cedula)+".txt"
-    archivo = open(nombreTxt,"w")
+    archivo = open("AVATARS/"+nombreTxt,"w")
     archivo.write("INFORMATION AVATAR" + '\n')
     archivo.write("Genero " + str(gender) + '\n')
     archivo.write("Color Piel " + str(skin) + '\n')
@@ -443,30 +444,270 @@ def dressShoes(ventana,cedula,outfit,accesorios):
         c += 1
     Button(ventana_shoes, text="AVATAR INFORMATION", command=lambda:mostrarOutfit(ventana,cedula,outfit,accesorios,selected.get()), font="Arial, 11").pack(padx=10,pady=20)
     Button(ventana_shoes, text="CHECK YOUR AVATAR",
-           command=lambda: mostrarAvatar(ventana,  outfit, accesorios, selected.get()), font="Arial, 11").pack(
+           command=lambda: mostrarAvatar(ventana, cedula, outfit, accesorios, selected.get()), font="Arial, 11").pack(
         padx=10, pady=20)
+
     ventana.destroy()
 
 def mostrarOutfits(outfit):
 
     ropa = Vestuario()
     return ropa.getRopas(outfit)
-def mostrarAvatar(ventana,outfit,accesorios,zapatos):
-    ventana_shoes = Toplevel()
-    ventana_shoes.config(bg="pink")
-    ventana_shoes.title("Create Avatar")
-    ventana_shoes.geometry("600x600")
-    Label(ventana_shoes, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=20, pady=40)
-    Label(ventana_shoes, bg="pink", text="THIS IS YOUR AVATAR", font="Arial, 15").pack()
 
-    
+def mostrarAvatar(ventana,cedula,outif,accesorios,zapatos):
+    ventana_avatar = Toplevel()
+    ventana_avatar.config(bg="pink")
+    ventana_avatar.title("Create Avatar")
+    ventana_avatar.geometry("600x600")
+    Label(ventana_avatar, bg="pink", text="Graphic Avatar Simulator", font="Time, 20").pack(padx=00, pady=10)
+    Label(ventana_avatar, bg="pink", text="THIS IS YOUR AVATAR", font="Arial, 15").pack()
 
+    guardarOutfit(cedula,outif,accesorios,zapatos)
 
+    id = str(cedula) + '.txt'
+    with os.scandir(path) as ficheros:
+        for fichero in ficheros:
+            if id == fichero.name:
+                    archi = open(fichero)
+                    lineas = archi.readlines()
 
+                    if lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 3\n' and lineas[4] == 'Color Pelo 2\n'\
+                                    and lineas[6] == 'Atuendo 0\n':
+
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/01.png'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="107", height="357")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 2\n'\
+                                    and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/02.png'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="108", height="365")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n'\
+                                    and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/03.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="110", height="367")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/04.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="106", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 3\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/05.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="107", height="360")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/06.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="106", height="364")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/07.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="106", height="364")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 4\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/08.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="105", height="363")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 3\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/09.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="102", height="369")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/10.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="106", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/11.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="107", height="362")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/12.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="107", height="365")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 3\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/13.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="107", height="360")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/14.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="104", height="362")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/15.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="106", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 0\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/16.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="109", height="363")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/17.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="173", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 1\n' \
+                            and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/18.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="175", height="365")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/19.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="173", height="364")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 0\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/20.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="170", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 2\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/21.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="173", height="349")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 1\n' \
+                            and lineas[6] == 'Atuendo 2\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/22.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="171", height="350")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 2\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/23.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="171", height="360")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 2\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/24.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="167", height="347")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/25.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="172", height="359")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 1\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/26.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="171", height="360")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/27.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="175", height="354")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 1\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/28.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="170", height="358")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 2\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/29.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="173", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 2\n' and lineas[4] == 'Color Pelo 1\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/30.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="173", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 1\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/31.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="173", height="366")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    elif lineas[1] == 'Genero 1\n' and lineas[2] == 'Color Piel 0\n' and lineas[4] == 'Color Pelo 0\n' \
+                            and lineas[6] == 'Atuendo 3\n':
+                        img_niñas = ImageTk.PhotoImage(Image.open('OUTFITS/32.PNG'))
+                        panel_hombre = Label(ventana_avatar, image=img_niñas, width="165", height="359")
+                        panel_hombre.photo = img_niñas
+                        panel_hombre.place(x="220", y="150")
+
+                    archi.close()
+
+        def regresar():
+            ventana_avatar.destroy()
+            ventana.deiconify()
+        ventana.destroy()
+        Button(ventana_avatar, text="Exit", font="Arial,11", command=lambda: regresar()).pack(padx=0, pady=20)
 
 def mostrarAccesorios(accesorio):
 
     ropa = Vestuario()
+
     return ropa.getAccesorio(accesorio)
 
 def mostrarZapatos(shoe):
@@ -498,12 +739,13 @@ def mostrarOutfit(ventana,cedula,outfit,accesorios,shoes):
     Label(ventana_outfit, bg="pink", text= shoe, font="Arial, 12").pack()
 
     guardarOutfit(cedula, outfit, accesorios,shoes)
-    Button(ventana_outfit, text="Exit", font="Arial,11", command=lambda: ventanaPrincipal()).pack(padx=0, pady=20)
+    Button(ventana_outfit, text="Exit", font="Arial,11", command=lambda: admin(ventana,cedula)).pack(padx=0, pady=20)
+
     ventana.destroy()
 
 def guardarOutfit(cedula, outfit, accesorios,shoes):
     nombreTxt = str(cedula) + ".txt"
-    archivo = open(nombreTxt, "a")
+    archivo = open("AVATARS/"+nombreTxt,"a")
     archivo.write("INFORMATION AVATAR" + '\n')
     archivo.write("Atuendo " + str(outfit) + '\n')
     archivo.write("Accesorio " + str(accesorios) + '\n')
@@ -533,7 +775,8 @@ def mostrar_Consulta2(ventana,cedula):
     Button(ventana_consulta2, text="Consult Hair", font= "Arial 13", command=lambda: analista(ventana,cedula)).pack(padx=0, pady=20)
     ventana.destroy()
 
-def Consulta_1(carpeta,indice,comp):
+def Consulta_1(indice,comp):
+    carpeta = 'C:/Users/ma210/OneDrive/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'
     resultados=[]
     with os.scandir(carpeta) as ficheros:
         for fichero in ficheros:
@@ -545,7 +788,7 @@ def Consulta_1(carpeta,indice,comp):
             archi.close()
     return resultados
 
-a= Consulta_1('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS',2,"++Rostro 3\n")
+a= Consulta_1(2,"++Rostro 3\n")
 cont=0
 for i in a:
     archivo= open('C:/Users/hp/Documents/GitHub/proyecto-graphic-avatar-simulator/AVATARS/'+a[cont])
